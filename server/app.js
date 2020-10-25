@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const cors = require('cors')
+const cors = require('cors');
 // var jwt = require('jsonwebtoken');
 const chat = require('./socket_server');
 const config = require('./config');
@@ -21,6 +21,7 @@ var createClassroom = require('./routers/APIs/createClassroom');
 var updateClassroom = require('./routers/APIs/updateClassroom');
 var classRecommend = require('./routers/APIs/classRecommend');
 var enterClassRoom = require('./routers/APIs/enterClassRoom');
+var deleteClassRoom = require('./routers/APIs/deleteClassRoom');
 var feedback = require('./routers/APIs/feedback');
 var logout = require('./routers/APIs/logout');
 // only for test
@@ -33,8 +34,11 @@ const io = app.io = require('socket.io')();
 chat.onConnection(io.sockets);
 
 // view engine setup
-// app.set('views', path.join(__dirname, 'views'));
+// __dirname gives the current directory path
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+app.use(express.static(path.join(__dirname, 'public')));
+//console.log('99699BB:' + path.join(__dirname, 'public'));
 
 // middleware
 app.use(cors());
@@ -67,6 +71,7 @@ app.use('/apis/createclassroom', createClassroom);
 app.use('/apis/updateclassroom', updateClassroom);
 app.use('/apis/classrecommend', classRecommend);
 app.use('/apis/enterclassroom', enterClassRoom);
+app.use('/apis/deleteclassroom', deleteClassRoom);
 app.use('/apis/feedback', feedback);
 app.use('/apis/logout', logout);
 // only for test

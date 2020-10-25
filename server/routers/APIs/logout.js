@@ -3,7 +3,7 @@ var router = express.Router();
 var User = require('../../models/userModel');
 
 router.post('/', function(req, res, next) {
-    console.log('99--99BB' + req.body.token);
+    //console.log('99--99BB' + req.body.token);
     User.findOneAndUpdate({token: req.body.token}, 
         {$set:{onLine: false}}, 
         function(err, user) {
